@@ -16,7 +16,8 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
             transaction = session.beginTransaction();
             Long itemId = (Long) session.save(movie);
             transaction.commit();
@@ -27,6 +28,10 @@ public class MovieDaoImpl implements MovieDao {
                 transaction.rollback();
             }
             throw new RuntimeException("Can't insert Movie entity");
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
