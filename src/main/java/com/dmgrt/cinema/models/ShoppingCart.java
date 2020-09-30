@@ -7,12 +7,6 @@ public class ShoppingCart {
     private List<Ticket> tickets;
     private User user;
 
-    public ShoppingCart(Long id, List<Ticket> tickets, User user) {
-        this.id = id;
-        this.tickets = tickets;
-        this.user = user;
-    }
-
     public Long getId() {
         return id;
     }

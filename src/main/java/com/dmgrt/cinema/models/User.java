@@ -1,15 +1,11 @@
 package com.dmgrt.cinema.models;
 
+import java.util.Objects;
+
 public class User {
     private Long id;
     private String email;
     private String password;
-
-    public User(Long id, String email, String password) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-    }
 
     public Long getId() {
         return id;
@@ -33,5 +29,24 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return id.equals(user.id)
+                && Objects.equals(email, user.email)
+                && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, password);
     }
 }
