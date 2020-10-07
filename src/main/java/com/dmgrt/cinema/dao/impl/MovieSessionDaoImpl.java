@@ -5,7 +5,6 @@ import com.dmgrt.cinema.lib.Dao;
 import com.dmgrt.cinema.models.MovieSession;
 import com.dmgrt.cinema.util.HibernateUtil;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import org.hibernate.Session;
@@ -15,16 +14,14 @@ import org.hibernate.query.Query;
 public class MovieSessionDaoImpl extends AbstractDao<MovieSession> implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        LocalDateTime startOfDay = date.atStartOfDay();
-        LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery(
                     "FROM MovieSession ms JOIN FETCH ms.movie JOIN FETCH ms.cinemaHall "
-                    + "WHERE ms.movie.id = :movieId "
-                    + "AND ms.showTime BETWEEN :startOfDay AND :endOfDay");
+                            + "WHERE ms.movie.id = :movieId "
+                            + "AND ms.showTime BETWEEN :startOfDay AND :endOfDay");
             query.setParameter("movieId", movieId);
-            query.setParameter("startOfDay", startOfDay);
-            query.setParameter("endOfDay", endOfDay);
+            query.setParameter("startOfDay", date.atStartOfDay());
+            query.setParameter("endOfDay", date.atTime(LocalTime.MAX));
             return query.getResultList();
         }
     }
