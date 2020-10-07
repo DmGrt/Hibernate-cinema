@@ -1,12 +1,15 @@
 package com.dmgrt.cinema;
 
+import com.dmgrt.cinema.exceptions.AuthenticationException;
 import com.dmgrt.cinema.lib.Injector;
 import com.dmgrt.cinema.models.CinemaHall;
 import com.dmgrt.cinema.models.Movie;
 import com.dmgrt.cinema.models.MovieSession;
+import com.dmgrt.cinema.security.AuthenticationService;
 import com.dmgrt.cinema.service.CinemaHallService;
 import com.dmgrt.cinema.service.MovieService;
 import com.dmgrt.cinema.service.MovieSessionService;
+import com.dmgrt.cinema.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -18,8 +21,12 @@ public class Main {
             (MovieService) injector.getInstance(MovieService.class);
     private static final MovieSessionService movieSessionService =
             (MovieSessionService) injector.getInstance(MovieSessionService.class);
+    private static final UserService userService =
+            (UserService) injector.getInstance(UserService.class);
+    private static final AuthenticationService authenticationService =
+            (AuthenticationService) injector.getInstance(AuthenticationService.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthenticationException {
         Movie tenet = new Movie();
         tenet.setTitle("Tenet");
         movieService.add(tenet);
@@ -35,9 +42,9 @@ public class Main {
         movieService.getAll().forEach(System.out::println);
 
         CinemaHall nolanHall = new CinemaHall();
-        nolanHall.setDescription("Nolan hall");
         nolanHall.setCapacity(50);
-
+        nolanHall.setDescription("Nolan hall");
+        
         cinemaHallService.add(nolanHall);
 
         cinemaHallService.getAll().forEach(System.out::println);
@@ -62,5 +69,10 @@ public class Main {
 
         System.out.println(movieSessionService.findAvailableSessions(2L, LocalDate.now()));
         System.out.println(movieSessionService.findAvailableSessions(3L, LocalDate.now()));
+
+        System.out.println("Registered: "
+                + authenticationService.register("jake1956@meta.ua", "tort"));
+        System.out.println("Logged in: "
+                + authenticationService.login("jake1956@meta.ua", "tort"));
     }
 }
