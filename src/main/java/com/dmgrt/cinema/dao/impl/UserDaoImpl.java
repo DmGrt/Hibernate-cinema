@@ -12,7 +12,7 @@ import org.hibernate.query.Query;
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public User add(User user) {
-        return super.add(user, User.class);
+        return super.add(user);
     }
 
     @Override

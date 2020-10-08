@@ -9,7 +9,7 @@ import org.hibernate.query.Query;
 
 public class AbstractDao<T> {
 
-    public T add(T item, Class<T> clazz) {
+    public T add(T item) {
         Transaction transaction = null;
         Session session = null;
         try {
@@ -23,7 +23,7 @@ public class AbstractDao<T> {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't insert"
-                    + clazz.getSimpleName() + "entity", e);
+                    + item.getClass().getSimpleName() + "entity", e);
         } finally {
             if (session != null) {
                 session.close();

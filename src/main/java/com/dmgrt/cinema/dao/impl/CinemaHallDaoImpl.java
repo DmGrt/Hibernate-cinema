@@ -9,7 +9,7 @@ import java.util.List;
 public class CinemaHallDaoImpl extends AbstractDao<CinemaHall> implements CinemaHallDao {
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        return super.add(cinemaHall, CinemaHall.class);
+        return super.add(cinemaHall);
     }
 
     @Override
