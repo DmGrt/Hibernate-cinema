@@ -5,10 +5,12 @@ import com.dmgrt.cinema.lib.Injector;
 import com.dmgrt.cinema.models.CinemaHall;
 import com.dmgrt.cinema.models.Movie;
 import com.dmgrt.cinema.models.MovieSession;
+import com.dmgrt.cinema.models.User;
 import com.dmgrt.cinema.security.AuthenticationService;
 import com.dmgrt.cinema.service.CinemaHallService;
 import com.dmgrt.cinema.service.MovieService;
 import com.dmgrt.cinema.service.MovieSessionService;
+import com.dmgrt.cinema.service.ShoppingCartService;
 import com.dmgrt.cinema.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,6 +27,8 @@ public class Main {
             (UserService) injector.getInstance(UserService.class);
     private static final AuthenticationService authenticationService =
             (AuthenticationService) injector.getInstance(AuthenticationService.class);
+    private static final ShoppingCartService shoppingCartService =
+            (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
     public static void main(String[] args) throws AuthenticationException {
         Movie tenet = new Movie();
@@ -70,9 +74,18 @@ public class Main {
         System.out.println(movieSessionService.findAvailableSessions(2L, LocalDate.now()));
         System.out.println(movieSessionService.findAvailableSessions(3L, LocalDate.now()));
 
-        System.out.println("Registered: "
-                + authenticationService.register("jake1956@meta.ua", "tort"));
-        System.out.println("Logged in: "
-                + authenticationService.login("jake1956@meta.ua", "tort"));
+        User jake = new User();
+        jake.setPassword("tort");
+        jake.setEmail("jake1956@meta.ua");
+
+        jake = authenticationService.register(jake.getEmail(), jake.getPassword());
+        System.out.println("Registered: " + jake);
+
+        jake = authenticationService.login("jake1956@meta.ua", "tort");
+        System.out.println("Logged in: " + jake);
+
+        shoppingCartService.registerNewShoppingCart(jake);
+        shoppingCartService.addSession(inceptionSession, jake);
+        shoppingCartService.addSession(tenetSession, jake);
     }
 }
