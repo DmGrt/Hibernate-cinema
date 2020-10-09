@@ -84,7 +84,6 @@ public class Main {
         jake = authenticationService.login("jake1956@meta.ua", "tort");
         System.out.println("Logged in: " + jake);
 
-        shoppingCartService.registerNewShoppingCart(jake);
         shoppingCartService.addSession(inceptionSession, jake);
         shoppingCartService.addSession(tenetSession, jake);
     }
