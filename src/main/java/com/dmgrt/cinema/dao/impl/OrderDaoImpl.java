@@ -1,6 +1,7 @@
 package com.dmgrt.cinema.dao.impl;
 
 import com.dmgrt.cinema.dao.OrderDao;
+import com.dmgrt.cinema.exceptions.DataProcessingException;
 import com.dmgrt.cinema.lib.Dao;
 import com.dmgrt.cinema.models.Order;
 import com.dmgrt.cinema.models.User;
@@ -20,10 +21,12 @@ public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao {
     public List<Order> getOrderHistory(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Order> query = session.createQuery("FROM Order o "
-                    + "JOIN FETCH o.tickets "
+                    + "LEFT JOIN FETCH o.tickets "
                     + "WHERE o.user = :user", Order.class);
             query.setParameter("user", user);
             return query.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get " + user + " orders", e);
         }
     }
 }
