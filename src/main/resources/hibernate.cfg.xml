@@ -22,6 +22,7 @@
         <mapping class="com.dmgrt.cinema.models.User"/>
         <mapping class="com.dmgrt.cinema.models.Ticket"/>
         <mapping class="com.dmgrt.cinema.models.ShoppingCart"/>
+        <mapping class="com.dmgrt.cinema.models.Order"/>
     </session-factory>
 
 </hibernate-configuration>
