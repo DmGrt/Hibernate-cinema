@@ -8,7 +8,6 @@ import com.dmgrt.cinema.models.User;
 import com.dmgrt.cinema.util.HibernateUtil;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
