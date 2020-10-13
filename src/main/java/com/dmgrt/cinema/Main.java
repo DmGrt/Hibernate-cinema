@@ -10,6 +10,7 @@ import com.dmgrt.cinema.security.AuthenticationService;
 import com.dmgrt.cinema.service.CinemaHallService;
 import com.dmgrt.cinema.service.MovieService;
 import com.dmgrt.cinema.service.MovieSessionService;
+import com.dmgrt.cinema.service.OrderService;
 import com.dmgrt.cinema.service.ShoppingCartService;
 import com.dmgrt.cinema.service.UserService;
 import java.time.LocalDate;
@@ -29,6 +30,8 @@ public class Main {
             (AuthenticationService) injector.getInstance(AuthenticationService.class);
     private static final ShoppingCartService shoppingCartService =
             (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+    private static final OrderService orderService =
+            (OrderService) injector.getInstance(OrderService.class);
 
     public static void main(String[] args) throws AuthenticationException {
         Movie tenet = new Movie();
@@ -86,5 +89,9 @@ public class Main {
 
         shoppingCartService.addSession(inceptionSession, jake);
         shoppingCartService.addSession(tenetSession, jake);
+
+        orderService.completeOrder(shoppingCartService.getByUser(jake).getTickets(), jake);
+
+        System.out.println("Jake's orders: " + orderService.getOrderHistory(jake));
     }
 }
