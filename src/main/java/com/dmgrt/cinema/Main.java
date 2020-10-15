@@ -13,10 +13,9 @@ import com.dmgrt.cinema.service.MovieSessionService;
 import com.dmgrt.cinema.service.OrderService;
 import com.dmgrt.cinema.service.ShoppingCartService;
 import com.dmgrt.cinema.service.UserService;
-import org.apache.log4j.Logger;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import org.apache.log4j.Logger;
 
 public class Main {
     private static final Logger logger = Logger.getRootLogger();
