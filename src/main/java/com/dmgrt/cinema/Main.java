@@ -48,7 +48,7 @@ public class Main {
         inception.setTitle("Inception");
         movieService.add(inception);
 
-        movieService.getAll().forEach(System.out::println);
+        movieService.getAll().forEach(logger::info);
 
         CinemaHall nolanHall = new CinemaHall();
         nolanHall.setCapacity(50);
@@ -56,7 +56,7 @@ public class Main {
 
         cinemaHallService.add(nolanHall);
 
-        cinemaHallService.getAll().forEach(System.out::println);
+        cinemaHallService.getAll().forEach(logger::info);
 
         MovieSession tenetSession = new MovieSession();
         tenetSession.setMovie(tenet);
