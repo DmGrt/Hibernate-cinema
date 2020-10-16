@@ -53,7 +53,7 @@ public class Main {
         CinemaHall nolanHall = new CinemaHall();
         nolanHall.setCapacity(50);
         nolanHall.setDescription("Nolan hall");
-        
+
         cinemaHallService.add(nolanHall);
 
         cinemaHallService.getAll().forEach(System.out::println);
@@ -76,19 +76,15 @@ public class Main {
         inceptionSession.setShowTime(LocalDateTime.now().plusMonths(5));
         movieSessionService.add(inceptionSession);
 
-        System.out.println(movieSessionService.findAvailableSessions(2L, LocalDate.now()));
-        System.out.println(movieSessionService.findAvailableSessions(3L, LocalDate.now()));
+        logger.info(movieSessionService.findAvailableSessions(2L, LocalDate.now()));
+        logger.info(movieSessionService.findAvailableSessions(3L, LocalDate.now()));
 
         User jake = new User();
         jake.setPassword("tort");
         jake.setEmail("jake1956@meta.ua");
 
-        try {
-            jake = authenticationService.register(jake.getEmail(), jake.getPassword());
-            logger.info("Registered: " + jake);
-        } catch (Exception e) {
-            logger.warn("Can't register user." + e);
-        }
+        jake = authenticationService.register(jake.getEmail(), jake.getPassword());
+        logger.info("Registered: " + jake);
 
         try {
             jake = authenticationService.login("jake1956@meta.ua", "tort");
