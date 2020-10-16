@@ -3,11 +3,13 @@ package com.dmgrt.cinema.dao.impl;
 import com.dmgrt.cinema.exceptions.DataProcessingException;
 import com.dmgrt.cinema.util.HibernateUtil;
 import java.util.List;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 public class AbstractDao<T> {
+    private static final Logger logger = Logger.getLogger(AbstractDao.class);
 
     public T add(T item) {
         Transaction transaction = null;
@@ -17,6 +19,7 @@ public class AbstractDao<T> {
             transaction = session.beginTransaction();
             session.save(item);
             transaction.commit();
+            logger.info(item.getClass().getSimpleName() + " was created: " + item);
             return item;
         } catch (Exception e) {
             if (transaction != null) {

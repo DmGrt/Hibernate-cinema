@@ -6,12 +6,15 @@ import com.dmgrt.cinema.lib.Dao;
 import com.dmgrt.cinema.models.ShoppingCart;
 import com.dmgrt.cinema.models.User;
 import com.dmgrt.cinema.util.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
 public class ShoppingCartDaoImpl extends AbstractDao<ShoppingCart> implements ShoppingCartDao {
+    private static final Logger logger = Logger.getLogger(ShoppingCartDaoImpl.class);
+
     @Override
     public ShoppingCart add(ShoppingCart shoppingCart) {
         return super.add(shoppingCart);
@@ -41,6 +44,7 @@ public class ShoppingCartDaoImpl extends AbstractDao<ShoppingCart> implements Sh
             transaction = session.beginTransaction();
             session.update(shoppingCart);
             transaction.commit();
+            logger.info("Shopping cart was updated: " + shoppingCart);
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();

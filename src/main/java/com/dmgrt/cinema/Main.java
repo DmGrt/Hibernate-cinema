@@ -15,8 +15,10 @@ import com.dmgrt.cinema.service.ShoppingCartService;
 import com.dmgrt.cinema.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import org.apache.log4j.Logger;
 
 public class Main {
+    private static final Logger logger = Logger.getLogger(Main.class);
     private static Injector injector = Injector.getInstance("com.dmgrt.cinema");
     private static final CinemaHallService cinemaHallService = (CinemaHallService) injector
             .getInstance(CinemaHallService.class);
@@ -33,7 +35,7 @@ public class Main {
     private static final OrderService orderService =
             (OrderService) injector.getInstance(OrderService.class);
 
-    public static void main(String[] args) throws AuthenticationException {
+    public static void main(String[] args) {
         Movie tenet = new Movie();
         tenet.setTitle("Tenet");
         movieService.add(tenet);
@@ -46,15 +48,15 @@ public class Main {
         inception.setTitle("Inception");
         movieService.add(inception);
 
-        movieService.getAll().forEach(System.out::println);
+        movieService.getAll().forEach(logger::info);
 
         CinemaHall nolanHall = new CinemaHall();
         nolanHall.setCapacity(50);
         nolanHall.setDescription("Nolan hall");
-        
+
         cinemaHallService.add(nolanHall);
 
-        cinemaHallService.getAll().forEach(System.out::println);
+        cinemaHallService.getAll().forEach(logger::info);
 
         MovieSession tenetSession = new MovieSession();
         tenetSession.setMovie(tenet);
@@ -74,24 +76,28 @@ public class Main {
         inceptionSession.setShowTime(LocalDateTime.now().plusMonths(5));
         movieSessionService.add(inceptionSession);
 
-        System.out.println(movieSessionService.findAvailableSessions(2L, LocalDate.now()));
-        System.out.println(movieSessionService.findAvailableSessions(3L, LocalDate.now()));
+        logger.info(movieSessionService.findAvailableSessions(2L, LocalDate.now()));
+        logger.info(movieSessionService.findAvailableSessions(3L, LocalDate.now()));
 
         User jake = new User();
         jake.setPassword("tort");
         jake.setEmail("jake1956@meta.ua");
 
         jake = authenticationService.register(jake.getEmail(), jake.getPassword());
-        System.out.println("Registered: " + jake);
+        logger.info("Registered: " + jake);
 
-        jake = authenticationService.login("jake1956@meta.ua", "tort");
-        System.out.println("Logged in: " + jake);
+        try {
+            jake = authenticationService.login("jake1956@meta.ua", "tort");
+            logger.info("Logged in: " + jake);
+        } catch (AuthenticationException e) {
+            logger.warn("Can't login user." + e);
+        }
 
         shoppingCartService.addSession(inceptionSession, jake);
         shoppingCartService.addSession(tenetSession, jake);
 
         orderService.completeOrder(shoppingCartService.getByUser(jake).getTickets(), jake);
 
-        System.out.println("Jake's orders: " + orderService.getOrderHistory(jake));
+        logger.info("Jake's orders: " + orderService.getOrderHistory(jake));
     }
 }
