@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import org.apache.log4j.Logger;
 
 public class Main {
-    private static final Logger logger = Logger.getRootLogger();
+    private static final Logger logger = Logger.getLogger(Main.class);
     private static Injector injector = Injector.getInstance("com.dmgrt.cinema");
     private static final CinemaHallService cinemaHallService = (CinemaHallService) injector
             .getInstance(CinemaHallService.class);
@@ -35,7 +35,7 @@ public class Main {
     private static final OrderService orderService =
             (OrderService) injector.getInstance(OrderService.class);
 
-    public static void main(String[] args) throws AuthenticationException {
+    public static void main(String[] args) {
         Movie tenet = new Movie();
         tenet.setTitle("Tenet");
         movieService.add(tenet);
@@ -76,17 +76,24 @@ public class Main {
         inceptionSession.setShowTime(LocalDateTime.now().plusMonths(5));
         movieSessionService.add(inceptionSession);
 
-        logger.info(movieSessionService.findAvailableSessions(2L, LocalDate.now()));
-        logger.info(movieSessionService.findAvailableSessions(3L, LocalDate.now()));
+        System.out.println(movieSessionService.findAvailableSessions(2L, LocalDate.now()));
+        System.out.println(movieSessionService.findAvailableSessions(3L, LocalDate.now()));
 
         User jake = new User();
         jake.setPassword("tort");
         jake.setEmail("jake1956@meta.ua");
 
-        jake = authenticationService.register(jake.getEmail(), jake.getPassword());
+        try {
+            jake = authenticationService.register(jake.getEmail(), jake.getPassword());
+        } catch (Exception e) {
+            logger.info("Can't register user." + e);
+        }
         logger.info("Registered: " + jake);
-
-        jake = authenticationService.login("jake1956@meta.ua", "tort");
+        try {
+            jake = authenticationService.login("jake1956@meta.ua", "tort");
+        } catch (AuthenticationException e) {
+            logger.info("Can't login user." + e);
+        }
         logger.info("Logged in: " + jake);
 
         shoppingCartService.addSession(inceptionSession, jake);
