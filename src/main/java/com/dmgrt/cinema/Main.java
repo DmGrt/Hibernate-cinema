@@ -85,16 +85,17 @@ public class Main {
 
         try {
             jake = authenticationService.register(jake.getEmail(), jake.getPassword());
+            logger.info("Registered: " + jake);
         } catch (Exception e) {
-            logger.info("Can't register user." + e);
+            logger.warn("Can't register user." + e);
         }
-        logger.info("Registered: " + jake);
+
         try {
             jake = authenticationService.login("jake1956@meta.ua", "tort");
+            logger.info("Logged in: " + jake);
         } catch (AuthenticationException e) {
-            logger.info("Can't login user." + e);
+            logger.warn("Can't login user." + e);
         }
-        logger.info("Logged in: " + jake);
 
         shoppingCartService.addSession(inceptionSession, jake);
         shoppingCartService.addSession(tenetSession, jake);
