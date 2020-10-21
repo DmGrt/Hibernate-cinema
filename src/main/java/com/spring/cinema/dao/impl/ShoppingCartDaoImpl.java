@@ -16,9 +16,9 @@ public class ShoppingCartDaoImpl extends AbstractDao<ShoppingCart> implements Sh
     private static final Logger logger = Logger.getLogger(ShoppingCartDaoImpl.class);
     private final SessionFactory sessionFactory;
 
-    public ShoppingCartDaoImpl(SessionFactory sessionFactory, SessionFactory sessionFactory1) {
+    public ShoppingCartDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
-        this.sessionFactory = sessionFactory1;
+        this.sessionFactory = sessionFactory;
     }
 
     @Override

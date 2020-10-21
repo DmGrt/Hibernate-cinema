@@ -12,9 +12,9 @@ import org.springframework.stereotype.Repository;
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private final SessionFactory sessionFactory;
 
-    public UserDaoImpl(SessionFactory sessionFactory, SessionFactory sessionFactory1) {
+    public UserDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
-        this.sessionFactory = sessionFactory1;
+        this.sessionFactory = sessionFactory;
     }
 
     @Override

@@ -15,9 +15,9 @@ import org.springframework.stereotype.Repository;
 public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao {
     private final SessionFactory sessionFactory;
 
-    public OrderDaoImpl(SessionFactory sessionFactory, SessionFactory sessionFactory1) {
+    public OrderDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
-        this.sessionFactory = sessionFactory1;
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
