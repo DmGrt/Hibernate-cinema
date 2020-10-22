@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-public class AbstractDao<T> {
+public abstract class AbstractDao<T> {
     private static final Logger logger = Logger.getLogger(AbstractDao.class);
     protected final SessionFactory sessionFactory;
 
@@ -36,6 +36,15 @@ public class AbstractDao<T> {
             if (session != null) {
                 session.close();
             }
+        }
+    }
+
+    public T getById(Long id, Class clazz) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<T> query = session.createQuery(
+                    "FROM " + clazz.getSimpleName() + " WHERE id = :id");
+            query.setParameter("id", id);
+            return query.getSingleResult();
         }
     }
 
