@@ -14,11 +14,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ShoppingCartDaoImpl extends AbstractDao<ShoppingCart> implements ShoppingCartDao {
     private static final Logger logger = Logger.getLogger(ShoppingCartDaoImpl.class);
-    private final SessionFactory sessionFactory;
 
     public ShoppingCartDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
-        this.sessionFactory = sessionFactory;
     }
 
     @Override

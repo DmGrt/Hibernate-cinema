@@ -10,7 +10,7 @@ import org.hibernate.query.Query;
 
 public class AbstractDao<T> {
     private static final Logger logger = Logger.getLogger(AbstractDao.class);
-    private final SessionFactory sessionFactory;
+    protected final SessionFactory sessionFactory;
 
     public AbstractDao(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
