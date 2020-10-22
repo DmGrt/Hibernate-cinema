@@ -45,6 +45,8 @@ public abstract class AbstractDao<T> {
                     "FROM " + clazz.getSimpleName() + " WHERE id = :id");
             query.setParameter("id", id);
             return query.getSingleResult();
+        } catch (Exception e) {
+            throw new DataProcessingException("Error retrieving " + clazz.getSimpleName(), e);
         }
     }
 
