@@ -41,10 +41,7 @@ public abstract class AbstractDao<T> {
 
     public T getById(Long id, Class clazz) {
         try (Session session = sessionFactory.openSession()) {
-            Query<T> query = session.createQuery(
-                    "FROM " + clazz.getSimpleName() + " WHERE id = :id");
-            query.setParameter("id", id);
-            return query.getSingleResult();
+            return (T) session.get(clazz, id);
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving " + clazz.getSimpleName(), e);
         }
