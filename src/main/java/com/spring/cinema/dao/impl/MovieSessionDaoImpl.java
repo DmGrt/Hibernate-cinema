@@ -1,6 +1,7 @@
 package com.spring.cinema.dao.impl;
 
 import com.spring.cinema.dao.MovieSessionDao;
+import com.spring.cinema.exceptions.DataProcessingException;
 import com.spring.cinema.models.MovieSession;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -34,5 +35,14 @@ public class MovieSessionDaoImpl extends AbstractDao<MovieSession> implements Mo
     @Override
     public MovieSession add(MovieSession session) {
         return super.add(session);
+    }
+
+    @Override
+    public MovieSession getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(MovieSession.class, id);
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get session by id = " + id, e);
+        }
     }
 }
