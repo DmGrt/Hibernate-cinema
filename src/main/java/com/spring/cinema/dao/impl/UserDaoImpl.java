@@ -1,6 +1,7 @@
 package com.spring.cinema.dao.impl;
 
 import com.spring.cinema.dao.UserDao;
+import com.spring.cinema.exceptions.DataProcessingException;
 import com.spring.cinema.models.User;
 import java.util.Optional;
 import org.hibernate.Session;
@@ -27,6 +28,15 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                     "FROM User WHERE email = :email", User.class);
             query.setParameter("email", email);
             return query.uniqueResultOptional();
+        }
+    }
+
+    @Override
+    public User getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(User.class, id);
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get user with id = " + id, e);
         }
     }
 }
