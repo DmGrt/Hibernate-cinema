@@ -38,7 +38,7 @@ public class OrderController {
         orderService.completeOrder(tickets, user);
     }
 
-    @GetMapping("/by-userId")
+    @GetMapping
     public List<OrderResponseDto> getOrderByUserId(@RequestParam Long userId) {
         return orderService.getOrderHistory(userService.getById(userId)).stream()
                 .map(orderMapper::mapToDto)

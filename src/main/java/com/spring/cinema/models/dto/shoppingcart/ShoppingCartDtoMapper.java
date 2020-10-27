@@ -13,7 +13,6 @@ public class ShoppingCartDtoMapper {
         cartDto.setTicketIds(order.getTickets()
                 .stream().map(Ticket::getId)
                 .collect(Collectors.toList()));
-        cartDto.setUserId(order.getUser().getId());
         return cartDto;
     }
 }
