@@ -9,7 +9,6 @@ public class UserDtoMapper {
         UserResponseDto userDto = new UserResponseDto();
         userDto.setId(user.getId());
         userDto.setEmail(user.getEmail());
-        userDto.setPassword(user.getPassword());
         return userDto;
     }
 }

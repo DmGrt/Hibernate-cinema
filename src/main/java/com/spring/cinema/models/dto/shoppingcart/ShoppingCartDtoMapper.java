@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ShoppingCartDtoMapper {
-    public ShoppingCartResponseDto mapToDto(ShoppingCart order) {
+    public ShoppingCartResponseDto mapToDto(ShoppingCart shoppingCart) {
         ShoppingCartResponseDto cartDto = new ShoppingCartResponseDto();
-        cartDto.setId(order.getId());
-        cartDto.setTicketIds(order.getTickets()
+        cartDto.setId(shoppingCart.getId());
+        cartDto.setTicketIds(shoppingCart.getTickets()
                 .stream().map(Ticket::getId)
                 .collect(Collectors.toList()));
         return cartDto;
