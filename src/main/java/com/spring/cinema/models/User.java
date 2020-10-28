@@ -23,5 +23,4 @@ public class User {
     private String email;
     @NonNull
     private String password;
-    private byte[] salt;
 }
