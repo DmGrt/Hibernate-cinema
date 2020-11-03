@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DataInjector {
-    private static final String ADMIN = "ADMIN";
-    private static final String USER = "USER";
+    private static final String ADMIN_ROLE_NAME = "ADMIN";
+    private static final String USER_ROLE_NAME = "USER";
     private final RoleService roleService;
     private final UserService userService;
     private final ShoppingCartService cartService;
@@ -26,8 +26,8 @@ public class DataInjector {
 
     @PostConstruct
     public void injectData() {
-        Role adminRole = Role.of(ADMIN);
-        Role userRole = Role.of(USER);
+        Role adminRole = Role.of(ADMIN_ROLE_NAME);
+        Role userRole = Role.of(USER_ROLE_NAME);
         roleService.add(adminRole);
         roleService.add(userRole);
         User admin = new User();
